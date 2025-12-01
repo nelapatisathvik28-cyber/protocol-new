@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Simple Digital Clock</title>
+  <style>
+    /* Simple styling for the clock display */
+    body {
+      display: flex;
+      height: 100vh;
+      margin: 0;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #0f172a, #071033);
+      font-family: Arial, sans-serif;
+    }
+
+    #clock {
+      background: rgba(255,255,255,0.06);
+      padding: 28px 36px;
+      border-radius: 12px;
+      box-shadow: 0 8px 30px rgba(2,6,23,0.6);
+      color: #e6eef8;
+      font-size: 48px;
+      letter-spacing: 2px;
+      text-align: center;
+      min-width: 220px;
+    }
+
+    #date {
+      font-size: 14px;
+      color: #a9c0ea;
+      margin-top: 6px;
+    }
+  </style>
+</head>
+<body>
+  <div id="clock">
+    <div id="time">--:--:--</div>
+    <div id="date"></div>
+  </div>
+
+  <script>
+    // updateClock: gets current time & date and writes to DOM
+    function updateClock() {
+      const now = new Date();
+
+      // toLocaleTimeString() formats time according to locale and options
+      const timeString = now.toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false        // set to true for 12-hour clock with AM/PM
+      });
+
+      // toLocaleDateString() gives a readable date (e.g., "Mon, Aug 11, 2025")
+      
+      const dateString = now.toLocaleDateString([], {
+        weekday: 'short',
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+      });
+
+      document.getElementById('time').textContent = timeString;
+      document.getElementById('date').textContent = dateString;
+    }
+
+    // Run immediately so the clock shows right away (no 1-second blank)
+    updateClock();
+
+    // Then update every 1 second (1000 ms)
+    const timerId = setInterval(updateClock, 1000);
+
+    // If you ever need to stop the clock: clearInterval(timerId);
+  </script>
+</body>
+</html>
+
